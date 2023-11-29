@@ -4,6 +4,7 @@ go 1.21.1
 
 require (
 	github.com/axgle/mahonia v0.0.0-20180208002826-3358181d7394
+	github.com/eatmoreapple/openwechat v1.4.6
 	github.com/forgoer/openssl v1.6.0
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-playground/locales v0.14.1
