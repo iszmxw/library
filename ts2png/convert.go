@@ -89,24 +89,39 @@ func addPNGHeader(directory string) error {
 	return nil
 }
 
+// copyPNGHeader 从PNG头文件和源PNG文件中读取数据，将它们合并，然后写入目标文件。
+// 参数：
+//
+//	headerPath: 包含PNG头数据的文件路径
+//	sourcePath: 包含源PNG数据的文件路径
+//	destPath:   合并数据后写入的目标文件路径
+//
+// 返回：
+//
+//	如果操作成功，返回nil；否则返回相应的错误。
 func copyPNGHeader(headerPath, sourcePath, destPath string) error {
+	// 读取PNG头文件数据
 	headerData, err := ioutil.ReadFile(headerPath)
 	if err != nil {
 		return err
 	}
 
+	// 读取源PNG文件数据
 	sourceData, err := ioutil.ReadFile(sourcePath)
 	if err != nil {
 		return err
 	}
 
+	// 将PNG头文件数据和源PNG文件数据合并
 	destData := append(headerData, sourceData...)
 
+	// 将合并后的数据写入目标文件
 	err = ioutil.WriteFile(destPath, destData, os.ModePerm)
 	if err != nil {
 		return err
 	}
 
+	// 返回nil表示操作成功
 	return nil
 }
 
