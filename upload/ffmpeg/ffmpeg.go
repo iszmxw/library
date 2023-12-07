@@ -1,4 +1,4 @@
-package bilibili
+package ffmpeg
 
 import (
 	"fmt"
@@ -52,7 +52,7 @@ func safeName(file string) string {
 	return file
 }
 
-func genSlice(file string, time int) string {
+func genSlice(file string, fileSize int) string {
 	var sub strings.Builder
 	rate := bitRate(file)
 	vcodec := videoCodec(file)
@@ -61,13 +61,19 @@ func genSlice(file string, time int) string {
 	if rate != 0 {
 		segmentTime = Min(20, maxBits/int(rate*1.35))
 	}
-	segmentTimeArg := fmt.Sprintf(" -segment_time %d", segmentTime)
-	if time > 0 {
-		segmentTimeArg = fmt.Sprintf(" -segment_time %d", time)
+	//segmentTimeArg := fmt.Sprintf(" -segment_time %d", segmentTime)
+	//if time > 0 {
+	//	segmentTimeArg = fmt.Sprintf(" -segment_time %d", time)
+	//}
+	segmentTimeArg := fmt.Sprintf(" -fs %dM", segmentTime)
+	if fileSize > 0 {
+		segmentTimeArg = fmt.Sprintf(" -fs %dM", fileSize)
 	}
 	// SEGMENT_TIME
 	sub.WriteString(segmentTimeArg)
-	return fmt.Sprintf("ffmpeg -y -i %s -c:v %s -c:a aac -bsf:v h264_mp4toannexb -map 0:v:0 -map 0:a? -f segment -segment_list out.m3u8 %s out%%05d.ts", safeName(file), vcodec, sub.String())
+	ffmpgg := fmt.Sprintf("ffmpeg -y -i %s -c:v %s -c:a aac -bsf:v h264_mp4toannexb -map 0:v:0 -map 0:a? -f segment -segment_list out.m3u8 %s out%%05d.ts", safeName(file), vcodec, sub.String())
+	logger.Info(ffmpgg)
+	return ffmpgg
 }
 
 func Min(a, b int) int {
@@ -83,12 +89,8 @@ func sameParams(tmpdir, command string) bool {
 	return tmpdir == command
 }
 
-func Up() {
-	tmpdir := "/Users/johnyep/service/go/library/bilibili/video"
-	file := "/Users/johnyep/service/go/library/bilibili/VID_20180615_194851.mp4"
-	time := 4 // 设置为0表示使用默认的切片时间
-	command := genSlice(file, time)
-
+func Ffmpeg(tmpdir, file string, fileSize int) {
+	command := genSlice(file, fileSize)
 	// 切换到临时目录
 	if sameParams(tmpdir, command) {
 		err := os.Chdir(tmpdir)
@@ -97,14 +99,19 @@ func Up() {
 			return
 		}
 	} else {
-		// 创建临时目录
-		if err := os.Mkdir(tmpdir, os.ModePerm); err != nil {
-			fmt.Println("Error creating temporary directory:", err)
-			return
+		// 检查目录是否存在
+		if _, err := os.Stat(tmpdir); os.IsNotExist(err) {
+			// 创建临时目录
+			if err := os.Mkdir(tmpdir, os.ModePerm); err != nil {
+				fmt.Println("Error creating temporary directory:", err)
+				panic(err)
+				return
+			}
 		}
 		// 切换到临时目录
 		if err := os.Chdir(tmpdir); err != nil {
 			fmt.Println("Error changing to temporary directory:", err)
+			panic(err)
 			return
 		}
 		// 执行命令
@@ -113,12 +120,14 @@ func Up() {
 		cmd.Stderr = os.Stderr
 		if err := cmd.Run(); err != nil {
 			fmt.Println("Error running command:", err)
+			panic(err)
 			return
 		}
 
 		// 记录命令到文件
 		if err := ioutil.WriteFile("command.sh", []byte(command), os.ModePerm); err != nil {
 			fmt.Println("Error writing command to file:", err)
+			panic(err)
 			return
 		}
 	}

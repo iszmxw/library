@@ -70,7 +70,7 @@ func addPNGHeader(directory string) error {
 			destPath := filepath.Join(rewritePath, file.Name())
 
 			// 将PNG文件头拷贝到新文件
-			err := copyPNGHeader("/Users/johnyep/service/go/library/ts2png/1.png", sourcePath, destPath)
+			err := copyPNGHeader("/Users/johnyep/service/go/library/upload/tmp/1.png", sourcePath, destPath)
 			if err != nil {
 				return err
 			}
