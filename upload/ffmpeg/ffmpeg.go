@@ -105,14 +105,12 @@ func Ffmpeg(tmpdir, file string, fileSize int) {
 			if err := os.Mkdir(tmpdir, os.ModePerm); err != nil {
 				fmt.Println("Error creating temporary directory:", err)
 				panic(err)
-				return
 			}
 		}
 		// 切换到临时目录
 		if err := os.Chdir(tmpdir); err != nil {
 			fmt.Println("Error changing to temporary directory:", err)
 			panic(err)
-			return
 		}
 		// 执行命令
 		cmd := exec.Command("sh", "-c", command)
@@ -121,14 +119,12 @@ func Ffmpeg(tmpdir, file string, fileSize int) {
 		if err := cmd.Run(); err != nil {
 			fmt.Println("Error running command:", err)
 			panic(err)
-			return
 		}
 
 		// 记录命令到文件
 		if err := ioutil.WriteFile("command.sh", []byte(command), os.ModePerm); err != nil {
 			fmt.Println("Error writing command to file:", err)
 			panic(err)
-			return
 		}
 	}
 }

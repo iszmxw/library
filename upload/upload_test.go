@@ -15,7 +15,7 @@ func TestFfmpeg(t *testing.T) {
 	// 临时工作目录
 	tmpdir := "/Users/johnyep/service/go/library/upload/tmp/video"
 	// 需要处理的视频
-	file := "/Users/johnyep/service/go/library/upload/tmp/video/VID_20180615_194851.mp4"
+	file := "/Users/johnyep/service/go/library/upload/tmp/video/lj-02-01.mp4"
 	fileSize := 4 // 设置为 0 表示使用默认的切片大小，这里为 4M
 	ffmpeg.Ffmpeg(tmpdir, file, fileSize)
 }
@@ -46,7 +46,7 @@ func TestIqOptionUploadImg(t *testing.T) {
 func TestBathUploadImg(t *testing.T) {
 	// 替换以下路径为你要读取的文件夹路径
 	dirPath := "/Users/johnyep/service/go/library/upload/tmp/video"
-	m3u8Path := "/Users/johnyep/service/go/library/upload/tmp/video/out.m3u8"
+	m3u8Path := "/Users/johnyep/service/go/library/upload/tmp/video/itab.m3u8"
 	ffmpeg.ScanFile(dirPath, m3u8Path)
 }
 

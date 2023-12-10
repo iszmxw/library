@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"io/ioutil"
 	"library/logger"
-	"library/upload/iqoption"
+	"library/upload/itab"
 	"library/upload/replace"
+	"os"
 	"strings"
 	"time"
 )
@@ -38,17 +39,28 @@ func ScanFile(dirPath, m3u8Path string) {
 			}
 			// 不包含就得文件名称，说明已经被替换处理过了
 			if !strings.Contains(string(content), file.Name()) {
+				RemoveFile(path)
 				continue
 			}
 			// 上传图片
 			//urls := bili.UploadImg(CSRF, COOKIE, path)
 			time.Sleep(time.Second * 5)
-			urls := iqoption.UploadImg(COOKIE, path)
+			urls := itab.UploadImg(path)
 			if len(urls) == 0 {
 				continue
 			}
 			// 替换原有 m3u8 的文件地址
 			replace.ReplaceFileContent(m3u8Path, file.Name(), urls)
 		}
+	}
+}
+
+func RemoveFile(path string) {
+	err := os.Remove(path)
+	if err != nil {
+		// 删除失败
+		panic(err)
+	} else {
+		fmt.Println("已删除", path)
 	}
 }
