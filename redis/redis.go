@@ -3,8 +3,8 @@ package redis
 import (
 	"fmt"
 	"github.com/go-redis/redis"
-	"goapi/pkg/config"
-	"goapi/pkg/logger"
+	"library/config"
+	"library/logger"
 	"reflect"
 	"sync"
 	"time"

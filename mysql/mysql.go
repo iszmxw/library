@@ -2,12 +2,12 @@ package mysql
 
 import (
 	"fmt"
-	"goapi/pkg/config"
-	MysqlLog "goapi/pkg/logger"
-	"goapi/pkg/logger/zapgorm2"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
+	"library/config"
+	MysqlLog "library/logger"
+	"library/logger/zapgorm2"
 	"log"
 )
 

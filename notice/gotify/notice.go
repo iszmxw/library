@@ -1,8 +1,8 @@
 package gotify
 
 import (
-	"goapi/pkg/logger"
 	"io/ioutil"
+	"library/logger"
 	"net/http"
 	"net/url"
 )

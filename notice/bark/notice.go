@@ -2,9 +2,9 @@ package bark
 
 import (
 	"fmt"
-	"goapi/pkg/config"
-	"goapi/pkg/logger"
 	"io/ioutil"
+	"library/config"
+	"library/logger"
 	"net/http"
 	"net/url"
 )

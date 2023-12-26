@@ -3,7 +3,7 @@ package config
 import (
 	"github.com/spf13/cast"
 	"github.com/spf13/viper"
-	"goapi/pkg/logger"
+	"library/logger"
 	"os"
 	"strings"
 )

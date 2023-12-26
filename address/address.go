@@ -5,13 +5,11 @@ import (
 	"errors"
 	"fmt"
 	cmap "github.com/orcaman/concurrent-map"
-	"goapi/app/models"
-	"goapi/pkg/config"
-	"goapi/pkg/helpers"
-	"goapi/pkg/logger"
-	"goapi/pkg/mysql"
-	"goapi/pkg/redis"
 	"io/ioutil"
+	"library/config"
+	"library/helpers"
+	"library/logger"
+	"library/redis"
 	"net/http"
 	"strings"
 	"time"
@@ -36,20 +34,10 @@ type Address struct {
 
 func dataBase() map[string]interface{} {
 	data := cmap.New().Items()
-	data["countrys"] = "China|Israel"           // 限制国家
-	data["timezones"] = "Europe"                // 限制时区
-	data["whitelist"] = GetPassLimitHostList(1) // ip白名单
+	data["countrys"] = "China|Israel"                          // 限制国家
+	data["timezones"] = "Europe"                               // 限制时区
+	data["whitelist"] = []string{"192.168.0.1", "192.168.0.2"} // ip白名单
 	return data
-}
-
-func GetPassLimitHostList(passLevel int) []string {
-	var result []string
-	mysql.DB.Debug().Model(models.GoAppPassLimitHost{}).Where(map[string]interface{}{
-		"is_show":    1,
-		"is_delete":  0,
-		"pass_level": passLevel,
-	}).Select("pass_host").Find(&result)
-	return result
 }
 
 /**

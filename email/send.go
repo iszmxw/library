@@ -1,8 +1,8 @@
 package email
 
 import (
-	"goapi/pkg/logger"
 	"gopkg.in/gomail.v2"
+	"library/logger"
 )
 
 func SendOneEmail(params Params) error {

@@ -1,0 +1,1 @@
+ffmpeg -y -i /Users/johnyep/service/go/library/upload/tmp/video/lj-02-01.mp4 -c:v copy -c:a aac -bsf:v h264_mp4toannexb -map 0:v:0 -map 0:a? -f segment -segment_list out.m3u8  -fs 4M out%05d.ts

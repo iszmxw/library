@@ -5,10 +5,10 @@ import (
 	"errors"
 	"github.com/spf13/cast"
 	"go.uber.org/zap"
-	"goapi/pkg/config"
-	"goapi/pkg/logger"
 	"gorm.io/gorm"
 	gormlogger "gorm.io/gorm/logger"
+	"library/config"
+	"library/logger"
 	"time"
 )
 

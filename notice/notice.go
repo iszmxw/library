@@ -2,9 +2,9 @@ package notice
 
 import (
 	"fmt"
-	"goapi/pkg/config"
-	"goapi/pkg/notice/bark"
-	"goapi/pkg/notice/gotify"
+	"library/config"
+	"library/notice/bark"
+	"library/notice/gotify"
 )
 
 func Notice(title, bodys string) {

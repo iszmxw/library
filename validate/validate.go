@@ -3,7 +3,7 @@ package validate
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
-	"goapi/pkg/echo"
+	"library/echo"
 )
 
 // 校验参数

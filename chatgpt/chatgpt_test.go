@@ -1,0 +1,23 @@
+package chatgpt_test
+
+import (
+	"fmt"
+	"library/chatgpt"
+	"log"
+	"testing"
+	"time"
+)
+
+func TestChatGpt(t *testing.T) {
+	SessionToken := "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik1UaEVOVUpHTkVNMVFURTRNMEZCTWpkQ05UZzVNRFUxUlRVd1FVSkRNRU13UmtGRVFrRXpSZyJ9.eyJodHRwczovL2FwaS5vcGVuYWkuY29tL3Byb2ZpbGUiOnsiZW1haWwiOiJtYWlsQDU0em0uY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWV9LCJodHRwczovL2FwaS5vcGVuYWkuY29tL2F1dGgiOnsicG9pZCI6Im9yZy1iTW9PeGZxbTJFYW96V0ZqSmRTSms2NkkiLCJ1c2VyX2lkIjoidXNlci1BSjQ2dmlJY2o0RGVJVWh6UmszWGhWQjcifSwiaXNzIjoiaHR0cHM6Ly9hdXRoMC5vcGVuYWkuY29tLyIsInN1YiI6ImF1dGgwfDY1OGE0NjgwNzZjZTI1Yjk2MmYzZjMzZSIsImF1ZCI6WyJodHRwczovL2FwaS5vcGVuYWkuY29tL3YxIiwiaHR0cHM6Ly9vcGVuYWkub3BlbmFpLmF1dGgwYXBwLmNvbS91c2VyaW5mbyJdLCJpYXQiOjE3MDM1NjEyOTcsImV4cCI6MTcwNDQyNTI5NywiYXpwIjoiVGRKSWNiZTE2V29USHROOTVueXl3aDVFNHlPbzZJdEciLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIG1vZGVsLnJlYWQgbW9kZWwucmVxdWVzdCBvcmdhbml6YXRpb24ucmVhZCBvcmdhbml6YXRpb24ud3JpdGUgb2ZmbGluZV9hY2Nlc3MifQ.Wue0eJwD6u2bOkTem1UVcrl_6ow7zvCiNSYYlcrA1kcNLFqpEt8YOLdefubVsbB6ySPMhwvXYNfMdfH0PuOtYfFRXkGspZkPJiBW5YsahMEwz0Rka_LXWEBbS-EHv7IQIi_ZMt_yIRoCcNeSLIFbDzXj-BKNk136jkr6HUurN8JFfqaA2B85gfdZaKBgr5mvre6NLBck8wMMSuWOYK9mvlZr6k5GVnlN4WkRNkCx5vdHtNMlVAGOnBEutxWaM3S6i86xEFpIn1s9i9ueWw-eODqCaIPyh9bLQK4VpXmtse32BYU-JGyf2u1cVmRG3ZdgnggL10zpf7amxF_sBziWMA"
+	chatGPT := chatgpt.Init(SessionToken)
+	expiryTime, _ := time.Parse(time.RFC3339, "2024-03-25T06:52:09.417Z")
+	chatGPT.AccessTokenMap.Set(chatgpt.KEY_ACCESS_TOKEN, SessionToken, expiryTime.Sub(time.Now()))
+	feed, err := chatGPT.SendMessage("updateText", 123456)
+	if err != nil {
+		log.Fatalf("%v", err)
+	}
+	fmt.Println(feed)
+	// reload updateChatID
+	//chatGPT.ResetConversation(updateChatID)
+}

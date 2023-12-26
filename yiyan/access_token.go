@@ -3,9 +3,9 @@ package yiyan
 import (
 	"encoding/json"
 	"fmt"
-	"goapi/pkg/logger"
-	"goapi/pkg/redis"
 	"io/ioutil"
+	"library/logger"
+	"library/redis"
 	"net/http"
 	"strings"
 )

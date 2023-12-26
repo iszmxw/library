@@ -1,7 +1,7 @@
 package output
 
 import (
-	"goapi/pkg/logger"
+	"library/logger"
 
 	"github.com/gin-gonic/gin"
 )
